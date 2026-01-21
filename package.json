@@ -1,6 +1,6 @@
 {
 	"name": "harmony",
-	"version": "2.0.2",
+	"version": "2.0.3",
 	"description": "Harmony Desktop App",
 	"main": "build/index.js",
 	"type": "module",

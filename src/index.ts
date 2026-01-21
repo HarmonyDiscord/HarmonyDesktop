@@ -86,7 +86,7 @@ if (!gotTheLock) {
 					nodeIntegration: false,
 					preload: path.join(import.meta.dirname, 'preload', 'preload.js')
 				},
-				backgroundColor: '#000000FF',
+				backgroundColor: '#000000',
 				show: false
 			});
 
