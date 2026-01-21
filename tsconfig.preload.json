@@ -1,0 +1,12 @@
+{
+    "compilerOptions": {
+        "module": "CommonJS",
+        "target": "ES2022",
+        "outDir": "./build/preload",
+        "strict": true,
+        "esModuleInterop": true
+    },
+    "include": [
+        "src/preload/**/*.ts"
+    ]
+}

@@ -1,0 +1,135 @@
+{
+	"name": "harmony",
+	"version": "2.0.2",
+	"description": "Harmony Desktop App",
+	"main": "build/index.js",
+	"type": "module",
+	"private": true,
+	"scripts": {
+		"dev": "NODE_ENV=development bun run build && NODE_ENV=development bun run electron build/index.js",
+		"dist:dir": "bun run build && bun run electron-builder --dir ",
+		"dist": "bun run build && bun run electron-builder --publish never",
+		"release": "bun run build && bun run electron-builder build --publish always",
+		"release:win": "bun run build && bun run electron-builder build --publish always --win",
+		"release:linux": "bun run build && bun run electron-builder build --publish always --linux",
+		"release:mac": "bun run build && bun run electron-builder build --publish always --mac",
+		"prebuild": "rm -rf build",
+		"build": "NODE_ENV=production tsc --project tsconfig.json &&  tsc --project tsconfig.preload.json",
+		"lint": "bun run lint:biome && bun run lint:tsc",
+		"lint:biome": "bun biome check --write .",
+		"lint:tsc": "bun tsc --noEmit",
+		"start": "NODE_ENV=production bun run build && NODE_ENV=production bun run electron build/index.js"
+	},
+	"author": {
+		"name": "tnfAngel",
+		"email": "contact@tnfangel.com",
+		"url": "https://tnfangel.com/"
+	},
+	"license": "Apache-2.0",
+	"homepage": "https://harmony.tnfangel.com",
+	"dependencies": {
+		"@tnfangel/discord-rpc-revamp": "^2.0.6",
+		"electron-log": "^5.4.3",
+		"electron-updater": "^6.6.2"
+	},
+	"devDependencies": {
+		"@biomejs/biome": "^1.9.4",
+		"@types/bun": "^1.2.20",
+		"electron": "^36.8.1",
+		"electron-builder": "^26.0.12",
+		"typescript": "^5.9.2"
+	},
+	"peerDependencies": {
+		"typescript": "^5.0.0"
+	},
+	"build": {
+		"productName": "Harmony",
+		"appId": "com.tnfangel.harmony",
+		"asar": true,
+		"files": [
+			"./build/**/*"
+		],
+		"generateUpdatesFilesForAllChannels": true,
+		"protocols": [
+			{
+				"name": "Harmony",
+				"schemes": [
+					"harmony"
+				]
+			}
+		],
+		"dmg": {
+			"contents": [
+				{
+					"x": 110,
+					"y": 150
+				},
+				{
+					"x": 240,
+					"y": 150,
+					"type": "link",
+					"path": "/Applications"
+				}
+			],
+			"icon": "assets/icon.icns"
+		},
+		"mac": {
+			"icon": "assets/icon.icns",
+			"target": [
+				"dmg",
+				"zip"
+			]
+		},
+		"linux": {
+			"target": [
+				{
+					"target": "AppImage",
+					"arch": [
+						"x64"
+					]
+				},
+				{
+					"target": "deb",
+					"arch": [
+						"x64"
+					]
+				},
+				{
+					"target": "rpm",
+					"arch": [
+						"x64"
+					]
+				}
+			],
+			"category": "Utility",
+			"icon": "assets/icon.icns"
+		},
+		"win": {
+			"target": [
+				{
+					"target": "nsis",
+					"arch": [
+						"x64",
+						"ia32"
+					]
+				}
+			],
+			"icon": "assets/icon.ico",
+			"artifactName": "Harmony Setup ${arch} ${version}.${ext}"
+		},
+		"nsis": {
+			"installerIcon": "assets/icon.ico",
+			"uninstallerIcon": "assets/icon.ico",
+			"uninstallDisplayName": "Harmony",
+			"oneClick": true,
+			"allowToChangeInstallationDirectory": false,
+			"createDesktopShortcut": true,
+			"createStartMenuShortcut": true
+		}
+	},
+	"trustedDependencies": [
+		"@biomejs/biome",
+		"electron",
+		"register-scheme"
+	]
+}
